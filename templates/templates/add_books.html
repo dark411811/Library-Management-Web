@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Register a New Book</h2>
+<form action="/add_book_action" method="POST" class="content-box">
+    <input type="text" name="title" placeholder="Enter Book Title" required>
+    <input type="text" name="author" placeholder="Enter Author Name" required>
+    <button type="submit" class="btn-submit">Save to Dashboard</button>
+</form>
+{% endblock %}
