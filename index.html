@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header-section">
+    <h2 class="dashboard-title">Inventory Overview</h2>
+    <div class="search-wrapper">
+        <form action="/" method="GET" class="search-box">
+            <input type="text" name="search" placeholder="Search book title..." value="{{ request.args.get('search', '') }}" autocomplete="off">
+            <button type="submit" class="search-btn">🔍 Search</button>
+        </form>
+    </div>
+</div>
+
+<div class="stats-container">
+    <div class="card blue"><h3>Total Books</h3><p>{{ t_books }}</p></div>
+    <div class="card green"><h3>Issued</h3><p>{{ t_issued }}</p></div>
+    <div class="card orange"><h3>Available</h3><p>{{ t_books - t_issued }}</p></div>
+</div>
+
+<div class="table-container">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Author</th>
+                <th>Quantity</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if books %}
+                {% for book in books %}
+                <tr>
+                    <td><b>{{ book[0] }}</b></td>
+                    <td>{{ book[1] }}</td>
+                    <td><span class="qty-badge">{{ book[2] }}</span></td>
+                    <td>
+                        <a href="/add_one/{{ book[0] }}/{{ book[1] }}" class="btn-add-sm">+ Add</a>
+                        <button class="btn-del-sm" onclick="removeQty('{{ book[0] }}')">Remove</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="no-data">No books found. Check your search or database!</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function removeQty(title) {
+    let n = prompt("Kitni quantity delete karni hai?");
+    if (n && n > 0) {
+        let f = document.createElement('form');
+        f.method = 'POST'; f.action = '/remove_quantity';
+        f.innerHTML = `<input type="hidden" name="title" value="${title}"><input type="hidden" name="qty_to_remove" value="${n}">`;
+        document.body.appendChild(f); f.submit();
+    }
+}
+</script>
+{% endblock %}

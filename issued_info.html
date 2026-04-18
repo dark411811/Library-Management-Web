@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="issued-container">
+    <h2>📋 Issued Books Records</h2>
+    <div class="total-status">Total Books Issued: {{ total_issued }}</div>
+
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Book Name</th>
+                <th>Student Name</th>
+                <th>Roll No</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for info in issues %}
+            <tr>
+                <td>{{ info[0] }}</td>
+                <td><b>{{ info[1] }}</b></td>
+                <td>{{ info[2] }}</td>
+                <td>{{ info[3] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

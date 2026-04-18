@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-box">
+    <h2>Issue a New Book</h2>
+    <form action="/issue_action" method="POST">
+        <label for="book_id">Select Book (Title & ID):</label>
+<select name="book_id" id="book_id" required>
+    {% for b in books %}
+        <option value="{{ b[0] }}">{{ b[1] }} (ID: {{ b[0] }})</option>
+    {% endfor %}
+</select>
+        <input type="text" name="student_name" placeholder="Student Name" required>
+        <input type="text" name="roll_no" placeholder="Roll No" required>
+        <button type="submit" class="btn-submit">Issue Book</button>
+    </form>
+</div>
+{% endblock %}
